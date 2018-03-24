@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<body>
+    <p id="testDom"></p>
+    <script src="./node_modules/systemjs/dist/system.js"></script>
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script>
+    var System = window.System || null;
+    System.config({
+        baseURL: './src',
+        transplier: 'plugin-babel',
+        map: {
+            'plugin-babel': './node_modules/systemjs-plugin-babel/plugin-babel.js',
+            'systemjs-babel-build': './node_modules/systemjs-plugin-babel/systemjs-babel-browser.js',
+            'css': './node_modules/systemjs-plugin-css/css.js'
+        },
+        babelOptions: {},
+        meta: {
+            '*.css': {
+                loader: 'css'
+            }
+        }
+    });
+
+    System.import('index.js');
+    </script>
+</body>
+</html>
