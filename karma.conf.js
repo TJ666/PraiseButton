@@ -1,13 +1,10 @@
-/*eslint-disable */
 // Karma configuration
-// Generated on Sat Mar 24 2018 19:17:19 GMT+0800 (中国标准时间)
-process.env.PHANTOMJS_BIN = './node_modules/.bin/phantomjs';
+// Generated on Sun Mar 25 2018 21:20:11 GMT+0800 (中国标准时间)
+
 module.exports = function(config) {
   config.set({
 
     basePath: '',
-
-    plugins: ['karma-phantomjs-launcher'],
 
 
     // frameworks to use
@@ -15,8 +12,8 @@ module.exports = function(config) {
 
 
     files: [
-      'src/**/*.js',
-      'test/**/*.js'
+      './unit/**/*.js',
+      './unit/**/*.spec.js'
     ],
 
 
@@ -24,10 +21,18 @@ module.exports = function(config) {
     ],
 
     preprocessors: {
+      './unit/**/*.js': ['coverage']
     },
 
 
-    reporters: ['progress'],
+    // test results reporter to use
+    // possible values: 'dots', 'progress'
+    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
+    reporters: ['progress', 'coverage'],
+    coverageReporter: {
+      type: 'html',
+      dir: 'coverage/'
+    },
 
 
     port: 9876,
@@ -39,16 +44,16 @@ module.exports = function(config) {
     logLevel: config.LOG_INFO,
 
 
-    autoWatch: true,
+    // enable / disable watching file and executing tests whenever any file changes
+    autoWatch: false,
 
 
     // start these browsers
     browsers: ['PhantomJS'],
 
 
-    // Continuous Integration mode
-    // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false,
+    // 在终端执行 改为true
+    singleRun: true,
 
     concurrency: Infinity
   })

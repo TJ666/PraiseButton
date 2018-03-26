@@ -89,11 +89,7 @@
             });
         }
     }
-    $.extend({
-        praiseButton(option) {
-            return new PraiseButton(option);
-        }
-    });
+
     $.extend({
         thumb(option) {
             return new Thumb(option);
