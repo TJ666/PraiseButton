@@ -9,7 +9,7 @@
         constructor(option) {
             const {
                 dom = document.body,       // 点赞容器
-                cla = '',                  // 点赞icon className
+                cla = 'praise-btn',                  // 点赞icon className
                 hasPraise = false,         // 是否已点赞
                 total = 0,                 // 已点赞数
                 cb = null                  // 点赞回调
@@ -21,7 +21,7 @@
             this.total = total;
             this.cb = cb;
 
-            this.domFragment = document.createDocumentFragment();
+            this.domFragment = document.createElement('div');
             this.totalDom = document.createElement('span');
             this.iconDom = document.createElement('span');
         }
@@ -36,9 +36,11 @@
             this.iconDom.className = this.cla;
             this.iconDom.innerHTML = this.hasPraise ? '取消点赞' : '点赞';
 
-            this.domFragment.appendChild(this.totalDom);
             this.domFragment.appendChild(this.iconDom);
+            this.domFragment.appendChild(this.totalDom);
 
+            this.totalDom.className = 'total-num';
+            this.domFragment.className = 'praise-wrap';
             this.dom.appendChild(this.domFragment);
         }
 
@@ -63,19 +65,28 @@
         bindEvent() {
             this.iconDom.onclick = this.thumbPraise.bind(this);
         }
-        thumbPraise() {
+        thumbPraise(e) {
             this.praise();
-            let me = this;
 
-            const i = document.createElement('i');
-            const X = this.iconDom.pageX;
-            const Y = this.iconDom.pageY;
-            i.innerHTML = this.hasPraise ? '+1' : '-1';
-            this.iconDom.appendChild(i);
-            const timer = setTimeout(function () {
-                timer && clearInterval(timer);
-                me.iconDom.children[0] && me.iconDom.children[0].remove();
-            }, 500);
+            const $i = $('<i>').text(`${this.hasPraise ? '+1' : '-1'}`);
+            const x = e.pageX;
+            const y = e.pageY;
+            $i.css({
+                top: y - 20,
+                left: x,
+                position: 'absolute',
+                color: '#E94F06',
+                width: '100px',
+                height: '100px'
+            });
+            $('body').append($i);
+            $i.animate({
+                top: y - 120,
+                opacity: 0,
+                'font-size': '1.4em'
+            }, 1500, function () {
+                $i.remove();
+            });
         }
     }
     $.extend({
